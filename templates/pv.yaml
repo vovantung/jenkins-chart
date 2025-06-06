@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
-    path: /mnt/data/jenkins-pv
+    path: /mnt/data/jenkins
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -18,5 +18,5 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - worker-1   # Tên node bạn muốn gán PV này
+                - worker  # Tên node bạn muốn gán PV này
 

@@ -12,11 +12,7 @@ spec:
       labels:
         app: jenkins
     spec:
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-          - 8.8.8.8
-          - 1.1.1.1
+      dnsPolicy: ClusterFirst
       serviceAccountName: jenkins-sa  
       containers:
         - name: jenkins
@@ -24,11 +20,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8080
+              name: http
+            - containerPort: 50000
+              name: agent  
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
             - name: aws-credentials
               mountPath: /var/jenkins_home/.aws
               readOnly: true
@@ -36,9 +33,6 @@ spec:
         - name: jenkins-home
           persistentVolumeClaim:
             claimName: jenkins-pvc
-        - name: docker-sock
-          hostPath:
-            path: /var/run/docker.sock
         - name: aws-credentials
           secret:
             secretName: aws-credentials

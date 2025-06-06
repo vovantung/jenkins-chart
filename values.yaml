@@ -1,11 +1,7 @@
 image:
-  repository: vothinhuydt/jenkins-abcde
-  tag: lst
+  repository: vothinhuydt/jenkins
+  tag: lst0
   pullPolicy: IfNotPresent
-
-persistence:
-    enabled: true
-    existingClaim: jenkins-pvc
 
 service:
   type: ClusterIP
@@ -16,6 +12,7 @@ persistence:
   storageClassName: ""      
   accessMode: ReadWriteOnce
   size: 10Gi
+  existingClaim: jenkins-pvc
 
 nodeSelector: {}
 tolerations: []
